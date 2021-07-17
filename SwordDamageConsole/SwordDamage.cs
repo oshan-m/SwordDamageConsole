@@ -9,36 +9,80 @@ namespace SwordDamageConsole
         public const int BASE_DAMAGE = 3;
         public const int FLAME_DAMGE = 2;
 
-        public int Roll;
-        public decimal MagicMultiplier = 1M;
-        public int FlamingDamage = 0;
-        public int Damage;
-
-        public void CalculateDamage()
+        private int roll;
+        public int Roll
         {
-            Damage = (int)(Roll * MagicMultiplier) + BASE_DAMAGE + FlamingDamage;
+            get { return roll; }
+            set 
+            { 
+                roll = value;
+                CalculateDamage();
+            }
         }
 
-        public void SetMagic(bool isMagic)
+        //public decimal MagicMultiplier = 1M;
+        //public int FlamingDamage = 0;
+        public int Damage { get; private set; }
+        //public int Damage;
+
+        public SwordDamage(int roll)
         {
-            if (isMagic)
-            {
-                MagicMultiplier = 1.75M;
-            }
-            else
-            {
-                MagicMultiplier = 1M;
-            }
+            Roll = roll;
             CalculateDamage();
         }
 
-        public void SetFlaming(bool isFlaming)
+        private void CalculateDamage()
         {
-            CalculateDamage();
-            if (isFlaming)
+            decimal magicMultiplier = 1M;
+            if (Magic) magicMultiplier = 1.57M;
+
+            Damage = BASE_DAMAGE;
+            Damage = (int)(Roll * magicMultiplier) + BASE_DAMAGE;
+            if (Flaming) Damage += FLAME_DAMGE;
+        }
+
+        private bool magic;
+        public bool Magic
+        {
+            get { return magic; }
+            set
             {
-                Damage += FLAME_DAMGE;
+                magic = value;
+                CalculateDamage();
             }
         }
+
+        //public void SetMagic(bool isMagic)
+        //{
+        //    if (isMagic)
+        //    {
+        //        MagicMultiplier = 1.75M;
+        //    }
+        //    else
+        //    {
+        //        MagicMultiplier = 1M;
+        //    }
+        //    CalculateDamage();
+        //}
+
+        private bool flaming;
+        public bool Flaming
+        {
+            get { return flaming; }
+            set 
+            {
+                flaming = value;
+                CalculateDamage();
+               // Damage += FLAME_DAMGE;
+            }
+        }
+        //public void SetFlaming(bool isFlaming)
+        //{
+        //    CalculateDamage();
+        //    if (isFlaming)
+        //    {
+        //        Damage += FLAME_DAMGE;
+        //    }
+        //}
     }
 }
