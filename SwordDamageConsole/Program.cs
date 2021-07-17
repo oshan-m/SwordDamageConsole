@@ -22,7 +22,9 @@ namespace SwordDamageConsole
             }
         }
 
-            }
+        private static int RollDice()
+        {
+            return random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
         }
     }
 }
